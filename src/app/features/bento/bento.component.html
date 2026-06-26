@@ -1,0 +1,111 @@
+<section class="bento-section" aria-labelledby="features-heading">
+
+  <!-- Ghost section number -->
+  <span class="section-ghost bento-section__ghost" aria-hidden="true">02</span>
+
+  <div class="container">
+
+    <header class="bento-section__header">
+      <div class="bento-section__kicker">
+        <span class="kicker-line" aria-hidden="true"></span>
+        <p class="bento-section__eyebrow">// features</p>
+      </div>
+      <h2 class="bento-section__title" id="features-heading">
+        Everything you need<br>to move fast
+      </h2>
+      <p class="bento-section__subtitle">Six pillars. One coherent platform.</p>
+    </header>
+
+    <!-- ── Desktop Bento Grid ─────────────────────────────────────────────── -->
+    @if (!isMobile()) {
+      <div class="bento-grid" role="list" aria-label="Platform features">
+        @for (f of features; track f.id; let i = $index) {
+          <article
+            class="bento-card"
+            [class.bento-card--active]="activeDesktop() === f.id"
+            [style.--card-accent]="'var(' + f.accentVar + ')'"
+            role="listitem"
+            tabindex="0"
+            [attr.aria-label]="f.label"
+            (mouseenter)="onCardEnter(f.id)"
+            (mouseleave)="onCardLeave()"
+            (focus)="onCardEnter(f.id)"
+            (blur)="onCardLeave()">
+
+            <!-- Top accent stripe -->
+            <div class="bento-card__stripe" aria-hidden="true"></div>
+
+            <div class="bento-card__inner">
+              <div class="bento-card__top-row">
+                <div class="bento-card__icon" [innerHTML]="f.icon"></div>
+                <span class="bento-card__num" aria-hidden="true">0{{ i + 1 }}</span>
+              </div>
+              <span class="bento-card__tag">{{ f.tag }}</span>
+              <h3 class="bento-card__headline">{{ f.headline }}</h3>
+              <p class="bento-card__body">{{ f.body }}</p>
+            </div>
+
+            <!-- Corner decoration -->
+            <svg class="bento-card__corner" width="40" height="40" viewBox="0 0 40 40"
+                 fill="none" aria-hidden="true">
+              <path d="M40 0 L40 40 L0 40" stroke="var(--card-accent)" stroke-width="1"
+                    stroke-dasharray="4 4" opacity="0.2"/>
+            </svg>
+
+            <!-- Gradient glow overlay -->
+            <div class="bento-card__glow" aria-hidden="true"></div>
+          </article>
+        }
+      </div>
+    }
+
+    <!-- ── Mobile Accordion ───────────────────────────────────────────────── -->
+    @if (isMobile()) {
+      <ul class="accordion" aria-label="Platform features">
+        @for (f of features; track f.id; let i = $index) {
+          <li class="accordion__item"
+              [class.accordion__item--transferred]="transferredId() === f.id"
+              [style.--card-accent]="'var(' + f.accentVar + ')'">
+
+            <button
+              class="accordion__trigger"
+              [class.accordion__trigger--open]="activeMobile() === f.id"
+              type="button"
+              [attr.aria-expanded]="activeMobile() === f.id"
+              [attr.aria-controls]="'acc-panel-' + f.id"
+              [id]="'acc-btn-' + f.id"
+              (click)="toggleAccordion(f.id)">
+
+              <span class="accordion__trigger-left">
+                <span class="accordion__num" aria-hidden="true">0{{ i + 1 }}</span>
+                <span class="accordion__icon" [innerHTML]="f.icon" aria-hidden="true"></span>
+                <span class="accordion__label">{{ f.label }}</span>
+              </span>
+
+              <svg class="accordion__chevron" width="20" height="20" viewBox="0 0 20 20"
+                   fill="none" aria-hidden="true">
+                <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div
+              class="accordion__panel"
+              [class.accordion__panel--open]="activeMobile() === f.id"
+              [id]="'acc-panel-' + f.id"
+              [attr.aria-labelledby]="'acc-btn-' + f.id"
+              role="region">
+              <div class="accordion__panel-inner">
+                <h3 class="accordion__headline">{{ f.headline }}</h3>
+                <p class="accordion__body">{{ f.body }}</p>
+                <span class="accordion__tag">{{ f.tag }}</span>
+              </div>
+            </div>
+
+          </li>
+        }
+      </ul>
+    }
+
+  </div>
+</section>
