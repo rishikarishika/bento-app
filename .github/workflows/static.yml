@@ -30,7 +30,7 @@ jobs:
         run: npm install
 
       - name: Build Angular app
-        run: npx ng build --configuration production --base-href=/
+        run: ng build --configuration production --base-href=/pricing-bento-app/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
